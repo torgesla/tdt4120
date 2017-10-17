@@ -1,0 +1,35 @@
+#!/usr/bin/python3
+from sys import stdin
+# from string import ascii_lowercase as chars
+from collections import deque
+
+def flexradix(A, char):
+    if len(A) <= 1:
+        return A
+    returnlist = []
+    heaps = []
+    #heaps = [[] for i in range(26)]
+    for i in range(26):
+        heaps.append([])
+
+    for string in A:
+        if char >= len(string):
+            returnlist.append(string)
+        else:
+            heaps[ord(string[char]) - ord('a')].append(string)
+
+    heaps = [flexradix(haug, char + 1) for haug in heaps]
+
+    return returnlist + [b for haugen in heaps for b in haugen]
+
+
+def main():
+    d = int(stdin.readline())
+    strings = []
+    for line in stdin:
+        strings.append(line.rstrip())
+    A = flexradix(strings, 0)
+    for string in A:
+        print(string)
+if __name__ == "__main__":
+    main()
