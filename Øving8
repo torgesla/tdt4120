@@ -1,0 +1,58 @@
+import sys
+from collections import deque
+
+
+class Node:
+    def __init__(self):
+        self.child = []
+        self.ratatosk = False
+        self.depth = 0
+
+
+def dfs(root):
+    stack = deque([root])
+
+    while stack:
+        current = stack.pop()
+
+        if current.ratatosk:
+            return current.depth
+
+        for n in current.child:
+            if n != None:
+                n.depth = current.depth + 1
+                stack.append(n)
+
+
+def bfs(root):
+    queue = deque([root])
+
+    while queue:
+        current = queue.pop()
+
+        if current.ratatosk:
+            return current.depth
+
+        for n in current.child:
+            if n != None:
+                n.depth = current.depth + 1
+                queue.appendleft(n)
+
+
+def main():
+ sys.stdin.readline(),sys.stdin.readline()
+ level=0
+ d=dict()
+ root=sys.stdin.readline().strip()
+ ratatosk=sys.stdin.readline().strip()
+ for line in sys.stdin:
+  children=line.split()
+  parent=children.pop(0)
+  for child in children:
+   d[child]=parent
+  while ratatosk in d:
+   ratatosk=d[ratatosk]
+   level+=1
+  if(ratatosk==root):
+   return level
+print(main())
